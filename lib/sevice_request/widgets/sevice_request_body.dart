@@ -130,7 +130,6 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
     return DateFormat.jm().format(dt);
   }
 
-
   Future<void> _selectLocation(LatLng selectedLocation) async {
     log('lat ${selectedLocation.latitude}');
     log('lng ${selectedLocation.longitude}');
@@ -318,9 +317,9 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                             )
                           else
                             const SizedBox.shrink(),
-                          const SizedBox(width: 16),
+                          const SizedBox(width: 12),
                           SizedBox(
-                            width: getProportionateScreenHeight(200),
+                            width: getProportionateScreenHeight(180),
                             child: ElevatedButton.icon(
                               icon: const Icon(Icons.camera_alt),
                               label: const Text('Capture Image'),
@@ -351,6 +350,7 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                       validator: (value) =>
                           value == null ? 'Please select status' : null,
                     ),
+                    const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
                       decoration: const InputDecoration(
                         labelText: 'Select Category',

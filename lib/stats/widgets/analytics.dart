@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_int_literals
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:field_master/auth/bloc/auth_bloc.dart';
+import 'package:field_master/utils/cubit/firebase_cubit.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:field_master/auth/bloc/auth_bloc.dart';
-import 'package:field_master/utils/cubit/firebase_cubit.dart';
 
 class AnalyticsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -70,7 +70,7 @@ class AnalyticsData {
       id: data['id'] as int? ?? 0,
       status: data['status'] as String? ?? '',
       requestDate:
-          DateTime.tryParse((data['date'] as String)) ?? DateTime.now(),
+          DateTime.tryParse(data['date'] as String) ?? DateTime.now(),
       responseTime: 2.5,
     );
   }
