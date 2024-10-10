@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:field_master/main/widgets/main_body.dart';
 import 'package:field_master/utils/size_config.dart';
+import 'package:flutter/material.dart';
 
 /// {@template main_page}
 /// A description for MainPage

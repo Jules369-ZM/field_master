@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:field_master/main/cubit/main_cubit.dart';
 import 'package:field_master/sevice_request/cubit/cubit.dart';
 import 'package:field_master/sevice_request/view/sevice_request_page.dart';
@@ -74,72 +76,131 @@ class _SeviceRequestHistoryBodyState extends State<SeviceRequestHistoryBody> {
     JsonMap serviceRequest,
     String status,
   ) {
-    return Dismissible(
-      key: Key(
-        serviceRequest['uuid'].toString(),
-      ), // Ensure each item has a unique key
-      direction: DismissDirection.endToStart, // Swipe from right to left
-      background: Container(
-        color: Colors.red, // Red background indicating delete
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const Icon(
-          Icons.delete,
-          color: Colors.white,
+    final status = serviceRequest['status'] as String? ?? '';
+    log(status);
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, SeviceRequestPage.route(serviceRequest));
+      },
+      child: Dismissible(
+        key: Key(serviceRequest['uuid'].toString()),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          color: Colors.redAccent,
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: const Icon(Icons.delete, color: Colors.white),
+        ),
+        onDismissed: (direction) {
+          context.read<SeviceRequestCubit>().deleteServiceRequest(
+                serviceRequest['uuid'] as String,
+                status,
+              );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${serviceRequest['clientName']} deleted')),
+          );
+        },
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.blueAccent.withOpacity(0.1),
+                      child: const Icon(
+                        Icons.build,
+                        color: Colors.blueAccent,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            serviceRequest['clientName'] as String,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            serviceRequest['description'] as String,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                _buildServiceDetailRow(
+                  label: 'Address:',
+                  value: serviceRequest['address'] as String? ?? '',
+                  icon: Icons.location_on_outlined,
+                ),
+                _buildServiceDetailRow(
+                  label: 'Status:',
+                  value: status,
+                  icon: Icons.info_outline,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      onDismissed: (direction) {
-        // Perform the deletion
-        context
-            .read<SeviceRequestCubit>()
-            .deleteServiceRequest(serviceRequest['uuid'] as String, status);
+    );
+  }
 
-        // Optionally show a snackbar after deletion
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${serviceRequest['clientName']} has been deleted'),
+  Widget _buildServiceDetailRow({
+    required String label,
+    required String value,
+    required IconData icon,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: Colors.blueAccent),
+          const SizedBox(width: 8),
+          Text(
+            '$label ',
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              color: Colors.black87,
+            ),
           ),
-        );
-      },
-      child: Card(
-        elevation: 2,
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(8),
-          dense: true,
-          leading: const Icon(Icons.build, color: Colors.blueAccent),
-          title: Text(serviceRequest['clientName'] as String),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Text('Description:'),
-                  const Spacer(),
-                  Text(serviceRequest['description'] as String),
-                ],
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
               ),
-              Row(
-                children: [
-                  const Text('Address:'),
-                  const Spacer(),
-                  Text(serviceRequest['address'] as String? ?? ''),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text('Status:'),
-                  const Spacer(),
-                  Text(serviceRequest['status'] as String? ?? ''),
-                ],
-              ),
-            ],
+              textAlign: TextAlign.end,
+            ),
           ),
-          trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            Navigator.push(context, SeviceRequestPage.route(serviceRequest));
-          },
-        ),
+        ],
       ),
     );
   }

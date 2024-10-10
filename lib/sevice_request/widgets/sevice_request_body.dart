@@ -229,6 +229,27 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                       },
                     ),
                     const SizedBox(height: 16),
+                    DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        labelText: 'Select Category',
+                        border: OutlineInputBorder(),
+                      ),
+                      value: selectedCat,
+                      items: categories.map((String item) {
+                        return DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedCat = newValue!;
+                        });
+                      },
+                      validator: (value) =>
+                          value == null ? 'Please select category' : null,
+                    ),
+                    const SizedBox(height: 16),
                     TextFormField(
                       initialValue: serviceDescription,
                       decoration: const InputDecoration(
@@ -246,53 +267,79 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                         return null;
                       },
                     ),
-                    AppContainer(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          buildFeildHeader(formatDate(selectedDate)),
-                          ElevatedButton(
-                            onPressed: () => _selectDate(context),
-                            child: const Text('Pick Date'),
-                          ),
-                        ],
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: TextEditingController(
+                        text: formatDate(
+                          selectedDate,
+                        ),
+                      ), // Display formatted date
+                      readOnly: true, // Prevent manual input
+                      decoration: InputDecoration(
+                        labelText: 'Pick Date',
+                        border: const OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          onPressed: () => _selectDate(
+                            context,
+                          ), // Trigger the date picker
+                          icon: const Icon(
+                            Icons.calendar_today,
+                          ), // Icon for date selection
+                        ),
                       ),
+                      onTap: () => _selectDate(context),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a date'; // Validate that a
+                        }
+                        return null;
+                      },
                     ),
-                    AppContainer(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          buildFeildHeader(formatTime(selectedTime)),
-                          ElevatedButton(
-                            onPressed: () => _selectTime(context),
-                            child: const Text('Pick Time'),
-                          ),
-                        ],
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: TextEditingController(
+                        text: formatTime(
+                          selectedTime,
+                        ),
+                      ), // Display formatted time
+                      readOnly: true, // Prevent manual input
+                      decoration: InputDecoration(
+                        labelText: 'Pick Time',
+                        border: const OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          onPressed: () => _selectTime(
+                            context,
+                          ), // Trigger the time picker
+                          icon: const Icon(
+                            Icons.access_time,
+                          ), // Icon for time selection
+                        ),
                       ),
+                      onTap: () => _selectTime(
+                        context,
+                      ), // Allow tapping on the text field to select time
                     ),
-                    AppContainer(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          buildFeildHeader('Location'),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            dense: true,
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.blueAccent,
-                            ),
-                            title: const Text('Location'),
-                            subtitle: Text(location),
-                            trailing: IconButton(
-                              onPressed: () async {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                await _getCurrentUserLocation();
-                              },
-                              icon: const Icon(Icons.refresh),
-                            ),
-                          ),
-                        ],
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: TextEditingController(
+                        text: location,
+                      ), // Initial location
+                      readOnly: true, // Prevent user input
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.location_on,
+                          color: Colors.blueAccent,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () async {
+                            FocusManager.instance.primaryFocus
+                                ?.unfocus(); // Close keyboard if open
+                            await _getCurrentUserLocation();
+                          },
+                          icon: const Icon(Icons.refresh),
+                        ),
+                        labelText: 'Location',
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                     AppContainer(
@@ -349,27 +396,6 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                       },
                       validator: (value) =>
                           value == null ? 'Please select status' : null,
-                    ),
-                    const SizedBox(height: 16),
-                    DropdownButtonFormField<String>(
-                      decoration: const InputDecoration(
-                        labelText: 'Select Category',
-                        border: OutlineInputBorder(),
-                      ),
-                      value: selectedCat,
-                      items: categories.map((String item) {
-                        return DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(item),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedCat = newValue!;
-                        });
-                      },
-                      validator: (value) =>
-                          value == null ? 'Please select category' : null,
                     ),
                     const SizedBox(height: 16),
                     BlocBuilder<FirebaseCubit, FirebaseState>(

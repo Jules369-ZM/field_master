@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:field_master/home/cubit/cubit.dart';
 import 'package:field_master/home/widgets/home_body.dart';
+import 'package:flutter/material.dart';
 
 /// {@template home_page}
 /// A description for HomePage

@@ -17,8 +17,10 @@ class App extends StatelessWidget {
     required this.servicesRepo,
     super.key,
   });
+
   final AuthRepo authRepo;
   final ServicesRepo servicesRepo;
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -44,7 +46,7 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => AuthBloc(
               authenticationRepository: authRepo,
-              firebaseCubit: context.read(),
+              firebaseCubit: context.read<FirebaseCubit>(),
               servicesRepository: servicesRepo,
             ),
           ),
@@ -63,14 +65,7 @@ class _FSMPageView extends StatelessWidget {
     SizeConfig().init(context);
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.status == AuthStatus.unauthenticated) {
-          // navKey.currentState
-          //     ?.pushAndRemoveUntil(LoginPage.route(), (route) => false);
-        }
-        if (state.status == AuthStatus.authenticated) {
-          // navKey.currentState
-          //     ?.pushAndRemoveUntil(MainPage.route(), (route) => false);
-        }
+        // Handle different Auth states if needed
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -86,23 +81,20 @@ class _FSMPageView extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               context.read<AuthBloc>().add(
+                    const AuthenticationStatusChanged(AuthStatus.authenticated),
+                  );
+              context.read<AuthBloc>().add(
+                    FireBase(fireBaseUser: snapshot.data),
+                  );
+              return const MainPage();
+            } else {
+              context.read<AuthBloc>().add(
                     const AuthenticationStatusChanged(
-                      AuthStatus.authenticated,
+                      AuthStatus.unauthenticated,
                     ),
                   );
-              context
-                  .read<AuthBloc>()
-                  .add(FireBase(fireBaseUser: snapshot.data));
-              return const MainPage();
-              // return const RegisterPage();
+              return const LoginPage();
             }
-            context.read<AuthBloc>().add(
-                  const AuthenticationStatusChanged(
-                    AuthStatus.unauthenticated,
-                  ),
-                );
-            return const LoginPage();
-            // return const RegisterPage();
           },
         ),
       ),

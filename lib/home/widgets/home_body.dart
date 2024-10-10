@@ -1,4 +1,7 @@
-import 'package:auth_repo/src/models/user.dart';
+import 'dart:developer';
+
+// import 'package:auth_repo/src/models/user.dart';
+import 'package:auth_repo/auth_repo.dart';
 import 'package:field_master/auth/bloc/auth_bloc.dart';
 import 'package:field_master/home/cubit/cubit.dart';
 import 'package:field_master/sevice_request/sevice_request.dart';
@@ -17,9 +20,11 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  bool fisrt = true;
   @override
   void initState() {
     super.initState();
+    fisrt = true;
   }
 
   Map<String, dynamic>? filterServiceRequests(
@@ -61,19 +66,39 @@ class _HomeBodyState extends State<HomeBody> {
     }
     if (serviceRequests.isNotEmpty) {
       upcomingService = filterServiceRequests(serviceRequests);
+    } else {
+      if (fisrt) {
+        context.read<HomeCubit>()
+          ..getServiceRequest(context)
+          ..countDocumentsByStatus();
+        fisrt = false;
+      }
     }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         label: const Text(
           'Service Request',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold, // Bold text for emphasis
+          ),
         ),
         icon: const Icon(Icons.add, color: Colors.white),
         onPressed: () {
           Navigator.push(context, SeviceRequestPage.route(null));
         },
-        splashColor: Theme.of(context_).splashColor,
-        backgroundColor: Theme.of(context_).colorScheme.secondary,
+        splashColor: Theme.of(context).splashColor,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(20), // Rounded corners for a softer look
+        ),
+        elevation: 6, // Add elevation for a floating effect
+        tooltip: 'Request a service', // Provide a tooltip for accessibility
+        // Add a shadow for depth
+        focusElevation: 12,
+        hoverElevation: 12,
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
@@ -85,102 +110,115 @@ class _HomeBodyState extends State<HomeBody> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                AppContainer(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Service Summary',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildSummaryCard(
-                            'Pending',
-                            count['Pending'].toString(),
-                            Colors.orangeAccent,
-                          ),
-                          _buildSummaryCard(
-                            'In Progress',
-                            count['InProgress'].toString(),
-                            Colors.lightBlue,
-                          ),
-                          _buildSummaryCard(
-                            'Completed',
-                            count['Complete'].toString(),
-                            Colors.green,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                _header(user),
+                Divider(
+                  thickness: 2,
+                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
-                if (upcomingService != null)
-                  AppContainer(
-                    type: 1,
+                Expanded(
+                  child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Next Service Location',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                        AppContainer(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Service Summary',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _buildSummaryCard(
+                                    'Pending',
+                                    count['Pending'].toString(),
+                                    Colors.orangeAccent,
+                                  ),
+                                  _buildSummaryCard(
+                                    'In Progress',
+                                    count['InProgress'].toString(),
+                                    Colors.lightBlue,
+                                  ),
+                                  _buildSummaryCard(
+                                    'Completed',
+                                    count['Complete'].toString(),
+                                    Colors.green,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        ListTile(
-                          contentPadding: const EdgeInsets.all(8),
-                          dense: true,
-                          leading: const Icon(
-                            Icons.location_on,
-                            color: Colors.blueAccent,
-                          ),
-                          title: Text(
-                            upcomingService['clientName'] as String,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                        if (upcomingService != null)
+                          AppContainer(
+                            type: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Text(
+                                  'Next Service Location',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                ListTile(
+                                  contentPadding: const EdgeInsets.all(8),
+                                  dense: true,
+                                  leading: const Icon(
+                                    Icons.location_on,
+                                    color: Colors.blueAccent,
+                                  ),
+                                  title: Text(
+                                    upcomingService['clientName'] as String,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    upcomingService['address'] as String? ?? '',
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                  trailing: const Icon(Icons.arrow_forward_ios),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      SeviceRequestPage.route(upcomingService),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
                           ),
-                          subtitle: Text(
-                            upcomingService['address'] as String? ?? '',
-                            style: const TextStyle(color: Colors.black),
+                        const SizedBox(height: 20),
+                        if (serviceRequests.isEmpty)
+                          const MessageScreen(
+                            message: 'You have no services',
                           ),
-                          trailing: const Icon(Icons.arrow_forward_ios),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              SeviceRequestPage.route(upcomingService),
-                            );
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: serviceRequests.length,
+                          itemBuilder: (context, i) {
+                            final req = serviceRequests[i];
+                            return _buildServiceCard(context, i, req);
                           },
                         ),
+                        if (serviceRequests.isNotEmpty)
+                          const SizedBox(height: 56),
                       ],
                     ),
-                  ),
-                const SizedBox(height: 20),
-                if (serviceRequests.isEmpty)
-                  const MessageScreen(
-                    message: 'You have no services',
-                    // textStyle: TextStyle(color: Colors.redAccent),
-                  ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics:  const NeverScrollableScrollPhysics(),
-                    itemCount: serviceRequests.length,
-                    itemBuilder: (context, i) {
-                      final req = serviceRequests[i];
-                      return _buildServiceCard(context, i, req);
-                    },
                   ),
                 ),
               ],
@@ -193,24 +231,47 @@ class _HomeBodyState extends State<HomeBody> {
 
   ListTile _header(User user) {
     return ListTile(
-                dense: true,
-                title: Text(
-                  getGreeting(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.indigo,
-                  ),
-                ),
-                subtitle: Text(
-                  user.displayName.isEmpty ? user.email : 'Unknown',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24,
-                    color: Colors.indigoAccent,
-                  ),
-                ),
-              );
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 4,
+        vertical: 4,
+      ), // Add some padding for spacing
+      leading: CircleAvatar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        radius: 30,
+        child: const Icon(
+          Icons.person, // Placeholder icon for user profile
+          size: 32,
+          color: Colors.white,
+        ),
+      ),
+      title: Text(
+        getGreeting(),
+        style: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 18,
+          color: Colors.black87,
+        ),
+      ),
+      subtitle: Text(
+        user.displayName.isEmpty
+            ? user.email
+            : 'Unknown', // Keep the same logic
+        style: const TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+          color: Colors.grey,
+        ),
+      ),
+      // trailing: IconButton(
+      //   icon: const Icon(
+      //     Icons.settings, // Add a settings icon for additional action
+      //     color: Colors.blueAccent,
+      //   ),
+      //   onPressed: () {
+      //     // Define action when the settings icon is pressed
+      //   },
+      // ),
+    );
   }
 
   Widget _buildSummaryCard(String title, String count, Color color) {
@@ -259,72 +320,130 @@ class _HomeBodyState extends State<HomeBody> {
     int index,
     JsonMap serviceRequest,
   ) {
-    return Dismissible(
-      key: Key(serviceRequest['uuid'].toString()),
-      direction: DismissDirection.endToStart,
-      background: Container(
-        color: Colors.redAccent,
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const Icon(Icons.delete, color: Colors.white),
-      ),
-      onDismissed: (direction) {
-        context
-            .read<HomeCubit>()
-            .deleteServiceRequest(serviceRequest['uuid'] as String, context);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${serviceRequest['clientName']} deleted')),
-        );
+    final status = serviceRequest['status'] as String? ?? '';
+    log(status);
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, SeviceRequestPage.route(serviceRequest));
       },
-      child: Card(
-        elevation: 3,
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+      child: Dismissible(
+        key: Key(serviceRequest['uuid'].toString()),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          color: Colors.redAccent,
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: const Icon(Icons.delete, color: Colors.white),
         ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(8),
-          dense: true,
-          leading: const Icon(Icons.build, color: Colors.blueAccent),
-          title: Text(
-            serviceRequest['clientName'] as String,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+        onDismissed: (direction) {
+          context
+              .read<HomeCubit>()
+              .deleteServiceRequest(serviceRequest['uuid'] as String, context);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${serviceRequest['clientName']} deleted')),
+          );
+        },
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.blueAccent.withOpacity(0.1),
+                      child: const Icon(
+                        Icons.build,
+                        color: Colors.blueAccent,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            serviceRequest['clientName'] as String,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            serviceRequest['description'] as String,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                _buildServiceDetailRow(
+                  label: 'Address:',
+                  value: serviceRequest['address'] as String? ?? '',
+                  icon: Icons.location_on_outlined,
+                ),
+                _buildServiceDetailRow(
+                  label: 'Status:',
+                  value: status,
+                  icon: Icons.info_outline,
+                ),
+              ],
             ),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Text('Description:'),
-                  const Spacer(),
-                  Text(serviceRequest['description'] as String),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text('Address:'),
-                  const Spacer(),
-                  Text(serviceRequest['address'] as String? ?? ''),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text('Status:'),
-                  const Spacer(),
-                  Text(serviceRequest['status'] as String? ?? ''),
-                ],
-              ),
-            ],
-          ),
-          trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            Navigator.push(context, SeviceRequestPage.route(serviceRequest));
-          },
         ),
+      ),
+    );
+  }
+
+  Widget _buildServiceDetailRow({
+    required String label,
+    required String value,
+    required IconData icon,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: Colors.blueAccent),
+          const SizedBox(width: 8),
+          Text(
+            '$label ',
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              color: Colors.black87,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+              ),
+              textAlign: TextAlign.end,
+            ),
+          ),
+        ],
       ),
     );
   }
