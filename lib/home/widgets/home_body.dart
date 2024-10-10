@@ -85,8 +85,7 @@ class _HomeBodyState extends State<HomeBody> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _header(user),
-                const Divider(thickness: 2, color: Colors.grey),
+
                 AppContainer(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
