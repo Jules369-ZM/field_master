@@ -3,18 +3,16 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:auth_repo/auth_repo.dart';
-import 'package:flutter/material.dart';
 import 'package:field_master/auth/bloc/auth_bloc.dart';
 import 'package:field_master/main/cubit/main_cubit.dart';
 import 'package:field_master/main/view/main_page.dart';
-import 'package:field_master/models/place.dart';
 import 'package:field_master/sevice_request/cubit/cubit.dart';
-import 'package:field_master/sevice_request/widgets/maps_screen.dart';
 import 'package:field_master/utils/cubit/firebase_cubit.dart';
 import 'package:field_master/utils/size_config.dart';
 import 'package:field_master/utils/utils.dart';
 import 'package:field_master/widgets/app_container.dart';
 import 'package:field_master/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -62,7 +60,6 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
     firstRun = true;
     showPickedImage = true;
     _getCurrentUserLocation();
-    // _getCurrentLocation();
   }
 
   Future<void> _getCurrentUserLocation() async {
@@ -133,26 +130,6 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
     return DateFormat.jm().format(dt);
   }
 
-  Future<void> _selectOnMap() async {
-    final selectedLocation = await Navigator.of(context).push<LatLng>(
-      MaterialPageRoute(
-        builder: (ctx) => MapsScreen(
-          initialLocation: PlaceLocation(
-            latitude: locData?.latitude ?? pickedlocation!.latitude,
-            longitude: locData?.longitude ?? pickedlocation!.longitude,
-          ),
-        ),
-      ),
-    );
-    log(selectedLocation.toString());
-
-    if (selectedLocation == null) {
-      return;
-    }
-    await _selectLocation(
-      LatLng(selectedLocation.latitude, selectedLocation.longitude),
-    );
-  }
 
   Future<void> _selectLocation(LatLng selectedLocation) async {
     log('lat ${selectedLocation.latitude}');
@@ -192,7 +169,6 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
 
       //
     }
-    log(seviceRequest.toString());
     return BlocConsumer<FirebaseCubit, FirebaseState>(
       listener: (context, state) {
         if (state.status == CurrentStatus.success) {
@@ -355,49 +331,45 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                         ],
                       ),
                     ),
-                    AppContainer(
-                      child: DropdownButtonFormField<String>(
-                        decoration: const InputDecoration(
-                          labelText: 'Select Status',
-                          border: OutlineInputBorder(),
-                        ),
-                        value: status,
-                        items: statuses.map((String item) {
-                          return DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            status = newValue!;
-                          });
-                        },
-                        validator: (value) =>
-                            value == null ? 'Please select status' : null,
+                    DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        labelText: 'Select Status',
+                        border: OutlineInputBorder(),
                       ),
+                      value: status,
+                      items: statuses.map((String item) {
+                        return DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          status = newValue!;
+                        });
+                      },
+                      validator: (value) =>
+                          value == null ? 'Please select status' : null,
                     ),
-                    AppContainer(
-                      child: DropdownButtonFormField<String>(
-                        decoration: const InputDecoration(
-                          labelText: 'Select Category',
-                          border: OutlineInputBorder(),
-                        ),
-                        value: selectedCat,
-                        items: categories.map((String item) {
-                          return DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedCat = newValue!;
-                          });
-                        },
-                        validator: (value) =>
-                            value == null ? 'Please select category' : null,
+                    DropdownButtonFormField<String>(
+                      decoration: const InputDecoration(
+                        labelText: 'Select Category',
+                        border: OutlineInputBorder(),
                       ),
+                      value: selectedCat,
+                      items: categories.map((String item) {
+                        return DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedCat = newValue!;
+                        });
+                      },
+                      validator: (value) =>
+                          value == null ? 'Please select category' : null,
                     ),
                     const SizedBox(height: 16),
                     BlocBuilder<FirebaseCubit, FirebaseState>(

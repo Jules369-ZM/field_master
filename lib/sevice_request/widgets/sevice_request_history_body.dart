@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:field_master/main/cubit/main_cubit.dart';
 import 'package:field_master/sevice_request/cubit/cubit.dart';
 import 'package:field_master/sevice_request/view/sevice_request_page.dart';
 import 'package:field_master/utils/cubit/firebase_cubit.dart';
 import 'package:field_master/utils/utils.dart';
 import 'package:field_master/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:net_source/net_source.dart';
 
 /// {@template sevice_request_body}
@@ -75,8 +75,9 @@ class _SeviceRequestHistoryBodyState extends State<SeviceRequestHistoryBody> {
     String status,
   ) {
     return Dismissible(
-      key: Key(serviceRequest['uuid']
-          .toString()), // Ensure each item has a unique key
+      key: Key(
+        serviceRequest['uuid'].toString(),
+      ), // Ensure each item has a unique key
       direction: DismissDirection.endToStart, // Swipe from right to left
       background: Container(
         color: Colors.red, // Red background indicating delete
@@ -95,7 +96,9 @@ class _SeviceRequestHistoryBodyState extends State<SeviceRequestHistoryBody> {
 
         // Optionally show a snackbar after deletion
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${serviceRequest['clientName']} deleted')),
+          SnackBar(
+            content: Text('${serviceRequest['clientName']} has been deleted'),
+          ),
         );
       },
       child: Card(
