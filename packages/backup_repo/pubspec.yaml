@@ -1,0 +1,22 @@
+name: backup_repo
+description: For backing up data
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_sign_in: ^6.1.5
+  googleapis: ^11.4.0
+  icloud_storage: ^2.2.0
+  path_provider: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0
+  very_good_analysis: ^5.1.0

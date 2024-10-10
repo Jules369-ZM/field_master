@@ -1,0 +1,227 @@
+{
+  "project_info": {
+    "project_number": "306409567166",
+    "firebase_url": "https://football-stats-3929b-default-rtdb.firebaseio.com",
+    "project_id": "football-stats-3929b",
+    "storage_bucket": "football-stats-3929b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306409567166:android:52d452677c48262c9fffef",
+        "android_client_info": {
+          "package_name": "com.custom.fsm.fsm_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyY7gCp4x0JAsFWsgiydhG018WJtiHGYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306409567166-2vmt1jfl8m7bma0pinn0e843n81dat30.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.head2head.pro"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306409567166:android:8a4b39778cfca5809fffef",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.head2head_pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyY7gCp4x0JAsFWsgiydhG018WJtiHGYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306409567166-2vmt1jfl8m7bma0pinn0e843n81dat30.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.head2head.pro"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306409567166:android:bf29b85aa98d3acb9fffef",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.head2head_pro.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyY7gCp4x0JAsFWsgiydhG018WJtiHGYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306409567166-2vmt1jfl8m7bma0pinn0e843n81dat30.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.head2head.pro"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306409567166:android:11628de9674625a99fffef",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.my_expense_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyY7gCp4x0JAsFWsgiydhG018WJtiHGYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306409567166-2vmt1jfl8m7bma0pinn0e843n81dat30.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.head2head.pro"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306409567166:android:0e9f12609501cb199fffef",
+        "android_client_info": {
+          "package_name": "com.field.master.field_master"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyY7gCp4x0JAsFWsgiydhG018WJtiHGYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306409567166-2vmt1jfl8m7bma0pinn0e843n81dat30.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.head2head.pro"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306409567166:android:3e7d8a2284702df69fffef",
+        "android_client_info": {
+          "package_name": "com.pbs.co"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyY7gCp4x0JAsFWsgiydhG018WJtiHGYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306409567166-4m92mnk4per4vugfs7corogmvvt10plv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306409567166-2vmt1jfl8m7bma0pinn0e843n81dat30.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.head2head.pro"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

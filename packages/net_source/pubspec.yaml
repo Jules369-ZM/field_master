@@ -1,0 +1,15 @@
+name: net_source
+description: Package to handle network calls
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dev_dependencies:
+  mocktail: ^0.3.0
+  test: ^1.24.3
+  very_good_analysis: ^5.0.0+1
+dependencies:
+  dio: ^5.1.2
+  phoenix_socket: ^0.6.4

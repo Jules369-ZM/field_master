@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>306409567166-eaunlg2jt2q4d7gvb5v7btu4mfhvsikp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.306409567166-eaunlg2jt2q4d7gvb5v7btu4mfhvsikp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC_JyYiEaqClsYwyoNCBlrExJ_-KBh6b94</string>
+	<key>GCM_SENDER_ID</key>
+	<string>306409567166</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.field.master.field-master</string>
+	<key>PROJECT_ID</key>
+	<string>football-stats-3929b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>football-stats-3929b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:306409567166:ios:40b43069eb162c1f9fffef</string>
+	<key>DATABASE_URL</key>
+	<string>https://football-stats-3929b-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

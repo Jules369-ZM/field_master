@@ -1,0 +1,29 @@
+name: auth_repo
+description: Repo for application authentication
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: 3.10.0
+
+dependencies:
+  crypto: ^3.0.5
+  dio: any
+  equatable: ^2.0.5
+  firebase_auth: any
+  flutter:
+    sdk: flutter
+  local_data:
+    path: ../local_data
+  net_source:
+    path: ../net_source
+  services_repo:
+    path: ../services_repo
+  uuid: ^4.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  very_good_analysis: ^5.0.0+1

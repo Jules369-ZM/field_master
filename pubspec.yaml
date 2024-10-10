@@ -1,0 +1,54 @@
+name: field_master
+description: Field Service Management Mobile App
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+
+  auth_repo:
+    path: packages/auth_repo
+  bloc: ^8.1.4
+  cloud_firestore: ^5.4.4
+  equatable: ^2.0.5
+  firebase_app_check: ^0.3.1+3
+  firebase_auth: ^5.3.1
+  firebase_core: ^3.6.0
+  firebase_storage: ^12.3.2
+  fl_chart: ^0.69.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.6
+  flutter_easyloading: ^3.0.5
+  flutter_localizations:
+    sdk: flutter
+  geocoding: ^3.0.0
+  geolocator: ^13.0.1
+  google_fonts: ^6.2.1
+  google_maps_flutter: ^2.9.0
+  http: ^1.2.2
+  image_picker: ^1.0.0
+  intl: ^0.19.0
+  net_source:
+    path: packages/net_source
+
+  path: ^1.9.0
+  services_repo:
+    path: packages/services_repo
+  uuid: ^4.5.1
+
+dev_dependencies:
+  bloc_test: ^9.1.7
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/
