@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:field_master/login/cubit/cubit.dart';
 import 'package:field_master/register/register.dart';
 import 'package:field_master/utils/utils.dart';
 import 'package:field_master/widgets/widgets.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// {@template login_body}
 /// Body of the LoginPage.
@@ -26,8 +26,8 @@ class _LoginBodyState extends State<LoginBody> {
   void initState() {
     super.initState();
     if (kDebugMode) {
-      // _email.text = 'jaiemfiv@gmail.com';
-      // password.text = 'password@1';
+      _email.text = 'jaiemfiv@gmail.com';
+      password.text = 'password@1';
     }
   }
 

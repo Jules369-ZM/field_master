@@ -62,23 +62,27 @@ String? validateTextField({required String? value, required String field}) {
 
 InputDecoration kTextFieldDecoration = InputDecoration(
   isDense: false,
-  // isCollapsed: false,
   hintText: 'Required',
-  // border: kOutline,
   enabledBorder: kOutline,
   filled: true,
   fillColor: Theme.of(navKey.currentContext!).colorScheme.onPrimary,
   focusedBorder: OutlineInputBorder(
-    borderSide:
-        BorderSide(color: Theme.of(navKey.currentContext!).colorScheme.primary),
+    borderSide: BorderSide(
+      color: Theme.of(navKey.currentContext!).colorScheme.primary,
+    ),
   ),
   hintStyle: TextStyle(
+    fontSize: 14, // Change font size
+    fontWeight: FontWeight.w400, // Adjust weight
+    fontStyle: FontStyle.italic, // Change style to italic
     color:
-        Theme.of(navKey.currentContext!).colorScheme.secondary.withOpacity(0.4),
+        Theme.of(navKey.currentContext!).colorScheme.secondary.withOpacity(0.5),
   ),
   contentPadding: const EdgeInsets.only(top: 16, left: 8),
   prefixIconConstraints: const BoxConstraints(minHeight: 50),
 );
+
+
 UnderlineInputBorder kUnderline = UnderlineInputBorder(
   borderSide: BorderSide(
     color: Theme.of(navKey.currentContext!).colorScheme.secondary,

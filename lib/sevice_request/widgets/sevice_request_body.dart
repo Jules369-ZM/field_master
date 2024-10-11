@@ -11,6 +11,7 @@ import 'package:field_master/utils/cubit/firebase_cubit.dart';
 import 'package:field_master/utils/size_config.dart';
 import 'package:field_master/utils/utils.dart';
 import 'package:field_master/widgets/app_container.dart';
+import 'package:field_master/widgets/app_snack_bar.dart';
 import 'package:field_master/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -172,6 +173,7 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
       listener: (context, state) {
         if (state.status == CurrentStatus.success) {
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            showSuccessSnackBar(context, message: 'Submitted  Successfully');
             if (mounted) {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -256,7 +258,7 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                         labelText: 'Service Description',
                         border: OutlineInputBorder(),
                       ),
-                      maxLines: 4,
+                      maxLines: 2,
                       onSaved: (value) {
                         serviceDescription = value!;
                       },
@@ -297,6 +299,8 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
+                      validator: (value) =>
+                          value == null ? 'Please select time' : null,
                       controller: TextEditingController(
                         text: formatTime(
                           selectedTime,
@@ -321,6 +325,8 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
+                      validator: (value) =>
+                          value == null ? 'Please select location' : null,
                       controller: TextEditingController(
                         text: location,
                       ), // Initial location
@@ -407,6 +413,29 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                             title: 'Submit',
                             onPressed: () async {
                               FocusManager.instance.primaryFocus?.unfocus();
+                              if (selectedDate == null) {
+                                showInfoSnackBar(
+                                  context,
+                                  message: 'Select Date',
+                                );
+                                return;
+                              }
+                              if (selectedTime == null) {
+                                showInfoSnackBar(
+                                  context,
+                                  message: 'Select Time',
+                                );
+                                return;
+                              }
+                              if (location
+                                  .toLowerCase()
+                                  .contains('not found')) {
+                                showInfoSnackBar(
+                                  context,
+                                  message: 'refresh location',
+                                );
+                                return;
+                              }
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 final image = serviceImage;

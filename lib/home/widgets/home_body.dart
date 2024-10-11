@@ -75,53 +75,55 @@ class _HomeBodyState extends State<HomeBody> {
       }
     }
 
-    return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        label: const Text(
-          'Service Request',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold, // Bold text for emphasis
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          label: const Text(
+            'Service Request',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold, // Bold text for emphasis
+            ),
           ),
+          icon: const Icon(Icons.add, color: Colors.white),
+          onPressed: () {
+            Navigator.push(context, SeviceRequestPage.route(null));
+          },
+          splashColor: Theme.of(context).splashColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(20), // Rounded corners for a softer look
+          ),
+          elevation: 6, // Add elevation for a floating effect
+          tooltip: 'Request a service', // Provide a tooltip for accessibility
+          // Add a shadow for depth
+          focusElevation: 12,
+          hoverElevation: 12,
         ),
-        icon: const Icon(Icons.add, color: Colors.white),
-        onPressed: () {
-          Navigator.push(context, SeviceRequestPage.route(null));
-        },
-        splashColor: Theme.of(context).splashColor,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(20), // Rounded corners for a softer look
-        ),
-        elevation: 6, // Add elevation for a floating effect
-        tooltip: 'Request a service', // Provide a tooltip for accessibility
-        // Add a shadow for depth
-        focusElevation: 12,
-        hoverElevation: 12,
-      ),
-      body: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
-          if (state.status == CurrentStatus.loading) {
-            return const LoadingScreen();
-          }
-          return Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _header(user),
-                Divider(
-                  thickness: 2,
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
+        body: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            if (state.status == CurrentStatus.loading) {
+              return const LoadingScreen();
+            }
+            return Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppContainer(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppContainer(
-                          child: Column(
+                        _header(user),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
@@ -140,101 +142,103 @@ class _HomeBodyState extends State<HomeBody> {
                                   _buildSummaryCard(
                                     'Pending',
                                     count['Pending'].toString(),
-                                    Colors.orangeAccent,
+                                    Colors.redAccent,
                                   ),
                                   _buildSummaryCard(
                                     'In Progress',
                                     count['InProgress'].toString(),
-                                    Colors.lightBlue,
+                                    Colors.pinkAccent,
                                   ),
                                   _buildSummaryCard(
                                     'Completed',
                                     count['Complete'].toString(),
-                                    Colors.green,
+                                    Colors.greenAccent,
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ),
-                        if (upcomingService != null)
-                          AppContainer(
-                            type: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                const Text(
-                                  'Next Service Location',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                ListTile(
-                                  contentPadding: const EdgeInsets.all(8),
-                                  dense: true,
-                                  leading: const Icon(
-                                    Icons.location_on,
-                                    color: Colors.blueAccent,
-                                  ),
-                                  title: Text(
-                                    upcomingService['clientName'] as String,
-                                    style: const TextStyle(
+                          if (upcomingService != null)
+                            AppContainer(
+                              type: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const Text(
+                                    'Next Service Location',
+                                    style: TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  subtitle: Text(
-                                    upcomingService['address'] as String? ?? '',
-                                    style: const TextStyle(color: Colors.black),
+                                  const SizedBox(height: 8),
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.all(8),
+                                    dense: true,
+                                    leading: const Icon(
+                                      Icons.location_on,
+                                      color: Colors.blueAccent,
+                                    ),
+                                    title: Text(
+                                      upcomingService['clientName'] as String,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      upcomingService['address'] as String? ??
+                                          '',
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                    ),
+                                    trailing:
+                                        const Icon(Icons.arrow_forward_ios),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        SeviceRequestPage.route(
+                                            upcomingService),
+                                      );
+                                    },
                                   ),
-                                  trailing: const Icon(Icons.arrow_forward_ios),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      SeviceRequestPage.route(upcomingService),
-                                    );
-                                  },
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                          const SizedBox(height: 20),
+                          if (serviceRequests.isEmpty)
+                            const MessageScreen(
+                              message: 'You have no services',
+                            ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: serviceRequests.length,
+                            itemBuilder: (context, i) {
+                              final req = serviceRequests[i];
+                              return _buildServiceCard(context, i, req);
+                            },
                           ),
-                        const SizedBox(height: 20),
-                        if (serviceRequests.isEmpty)
-                          const MessageScreen(
-                            message: 'You have no services',
-                          ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: serviceRequests.length,
-                          itemBuilder: (context, i) {
-                            final req = serviceRequests[i];
-                            return _buildServiceCard(context, i, req);
-                          },
-                        ),
-                        if (serviceRequests.isNotEmpty)
-                          const SizedBox(height: 56),
-                      ],
+                          if (serviceRequests.isNotEmpty)
+                            const SizedBox(height: 56),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 
   ListTile _header(User user) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 4,
-        vertical: 4,
-      ), // Add some padding for spacing
+      dense: true,
+      contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         radius: 30,
@@ -244,33 +248,30 @@ class _HomeBodyState extends State<HomeBody> {
           color: Colors.white,
         ),
       ),
-      title: Text(
-        getGreeting(),
-        style: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 18,
-          color: Colors.black87,
+      title: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          getGreeting(),
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            color: Colors.black87,
+          ),
         ),
       ),
-      subtitle: Text(
-        user.displayName.isEmpty
-            ? user.email
-            : 'Unknown', // Keep the same logic
-        style: const TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 20,
-          color: Colors.grey,
+      subtitle: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          user.displayName.isEmpty
+              ? user.email
+              : 'Unknown', // Keep the same logic
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
+            color: Colors.grey,
+          ),
         ),
       ),
-      // trailing: IconButton(
-      //   icon: const Icon(
-      //     Icons.settings, // Add a settings icon for additional action
-      //     color: Colors.blueAccent,
-      //   ),
-      //   onPressed: () {
-      //     // Define action when the settings icon is pressed
-      //   },
-      // ),
     );
   }
 
@@ -292,7 +293,7 @@ class _HomeBodyState extends State<HomeBody> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(4),
           child: Column(
             children: [
               Text(
