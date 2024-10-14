@@ -373,7 +373,7 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                           const SizedBox(width: 12),
                           SizedBox(
                             width: getProportionateScreenHeight(180),
-                            child: ElevatedButton.icon(
+                            child: OutlinedButton.icon(
                               icon: const Icon(Icons.camera_alt),
                               label: const Text('Capture Image'),
                               onPressed: _pickImage,

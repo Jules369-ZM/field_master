@@ -1,13 +1,12 @@
 name: field_master
 description: Field Service Management Mobile App
-version: 1.0.0+2
+version: 1.0.0+4
 publish_to: none
 
 environment:
   sdk: ^3.5.0
 
 dependencies:
-
   auth_repo:
     path: packages/auth_repo
   bloc: ^8.1.4

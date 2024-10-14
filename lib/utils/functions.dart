@@ -71,38 +71,43 @@ InputDecoration kTextFieldDecoration = InputDecoration(
       color: Theme.of(navKey.currentContext!).colorScheme.primary,
     ),
   ),
-  hintStyle: TextStyle(
-    fontSize: 14, // Change font size
-    fontWeight: FontWeight.w400, // Adjust weight
-    fontStyle: FontStyle.italic, // Change style to italic
+  hintStyle: kHintStyle.copyWith(
+    fontSize: 14, // Adjusted font size
+    fontWeight: FontWeight.w400, // Keep weight moderate
+    fontStyle: FontStyle.italic, // Italic for hint text
     color:
         Theme.of(navKey.currentContext!).colorScheme.secondary.withOpacity(0.5),
   ),
   contentPadding: const EdgeInsets.only(top: 16, left: 8),
-  prefixIconConstraints: const BoxConstraints(minHeight: 50),
+  prefixIconConstraints: const BoxConstraints(
+    minHeight: 50, // Adjusted to align with overall field design
+  ),
 );
-
 
 UnderlineInputBorder kUnderline = UnderlineInputBorder(
   borderSide: BorderSide(
     color: Theme.of(navKey.currentContext!).colorScheme.secondary,
-    width: 0.5,
+    width: 0.5, // Keeps a subtle underline border
   ),
 );
+
 OutlineInputBorder kOutline = OutlineInputBorder(
   borderSide: BorderSide(
     color: Theme.of(navKey.currentContext!).colorScheme.secondary,
-    width: 0.5,
+    width: 0.5, // Slim outline to ensure subtle borders
   ),
 );
 
 TextStyle kHintStyle = TextStyle(
-  fontSize: 16,
-  color:
-      Theme.of(navKey.currentContext!).colorScheme.secondary.withOpacity(0.4),
+  fontSize: 16, // A slightly larger font for better readability
+  color: Theme.of(navKey.currentContext!)
+      .colorScheme
+      .secondary
+      .withOpacity(0.4), // Lighter hint color
 );
+
 const kLabelStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 16, // Maintains a consistent font size across the UI
 );
 
 // Function to get greeting based on the time of day

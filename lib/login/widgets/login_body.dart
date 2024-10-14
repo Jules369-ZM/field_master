@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 /// {@template login_body}
 /// Body of the LoginPage.
 ///
-/// Add what it does
+/// Updated design with consistent spacing and Material 3 components.
 /// {@endtemplate}
 class LoginBody extends StatefulWidget {
   /// {@macro login_body}
@@ -22,6 +22,7 @@ class _LoginBodyState extends State<LoginBody> {
   final _formKey = GlobalKey<FormState>();
   final password = TextEditingController();
   final _email = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -46,71 +47,104 @@ class _LoginBodyState extends State<LoginBody> {
         return SafeArea(
           child: Form(
             key: _formKey,
-            child: AppListViewPage(
-              paddingVertical: 0,
-              children: [
-                // displayLogoPng(width: double.maxFinite, height: 100),
-                const SizedBox(height: 16),
-                const Text(
-                  'Welcome',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Login to continue',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 32),
-                buildFeildHeader('Email'),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _email,
-                  textInputAction: TextInputAction.next,
-                  validator: (value) => validateTxtFiled(value: value),
-                  decoration: kTextFieldDecoration,
-                ),
-                const SizedBox(height: 16),
-                buildFeildHeader('Password'),
-                PasswordField(password),
-                const SizedBox(height: 32),
-                if (state.status == CurrentStatus.loading)
-                  const LoadingButton()
-                else
-                  PrimaryButton(
-                    title: 'Login',
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        FocusManager.instance.primaryFocus!.unfocus();
-                        context.read<LoginCubit>().signInWithEmailAndPassword(
-                              _email.text.toLowerCase(),
-                              password.text,
-                            );
-                      }
-                    },
-                  ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Dont have an account?'),
-                    const SizedBox(width: 4),
-                    GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        RegisterPage.route(),
-                      ),
+                    const SizedBox(height: 48),
+                    Center(
                       child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                        'Welcome Back!',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
+                    Align(
+                      child: Image.asset(
+                        'assets/field_master.png',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Center(
+                      child: Text(
+                        'Login to continue',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.7),
+                            ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _email,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) => validateTxtFiled(value: value),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Email',
+                        hintText: 'Enter your email',
+                        prefixIcon: Icon(Icons.email),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    PasswordField(password),
+                    const SizedBox(height: 24),
+                    if (state.status == CurrentStatus.loading)
+                      const Center(child: CircularProgressIndicator())
+                    else
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              context
+                                  .read<LoginCubit>()
+                                  .signInWithEmailAndPassword(
+                                    _email.text.toLowerCase(),
+                                    password.text,
+                                  );
+                            }
+                          },
+                          child: const Text('Login'),
+                        ),
+                      ),
+                    const SizedBox(height: 24),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Don't have an account?"),
+                          const SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              RegisterPage.route(),
+                            ),
+                            child: Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 48),
                   ],
                 ),
-                const SizedBox(height: 24),
-              ],
+              ),
             ),
           ),
         );

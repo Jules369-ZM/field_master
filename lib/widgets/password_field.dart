@@ -1,8 +1,5 @@
-// ignore_for_file: always_use_package_imports
-
+import 'package:field_master/utils/utils.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/utils.dart';
 
 class PasswordField extends StatefulWidget {
   const PasswordField(
@@ -12,10 +9,12 @@ class PasswordField extends StatefulWidget {
     this.onChanged,
     this.error,
   });
+
   final TextEditingController _controller;
   final String label;
   final dynamic Function(String)? onChanged;
   final String? error;
+
   @override
   State<PasswordField> createState() => PasswordFieldState();
 }
@@ -32,24 +31,21 @@ class PasswordFieldState extends State<PasswordField> {
       obscureText: _hidePassword,
       onChanged: widget.onChanged,
       validator: (text) => validateTextField(value: text, field: widget.label),
-      decoration: kTextFieldDecoration.copyWith(
-        hintText: '******',
+      decoration: InputDecoration(
+        labelText: widget.label,
+        hintText: 'Enter your password',
+        border: const OutlineInputBorder(),
         errorText: widget.error,
         isDense: true,
-        isCollapsed: true,
-        suffixIcon: GestureDetector(
-          onTap: () {
+        suffixIcon: IconButton(
+          onPressed: () {
             setState(() {
               _hidePassword = !_hidePassword;
             });
           },
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Icon(
-              _hidePassword ? Icons.visibility : Icons.visibility_off,
-              color: Theme.of(navKey.currentContext!).colorScheme.tertiary,
-              size: 20,
-            ),
+          icon: Icon(
+            _hidePassword ? Icons.visibility : Icons.visibility_off,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
       ),
