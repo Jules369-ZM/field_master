@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:field_master/main/view/main_page.dart';
 import 'package:field_master/register/cubit/cubit.dart';
 import 'package:field_master/utils/size_config.dart';
 import 'package:field_master/utils/utils.dart';
 import 'package:field_master/widgets/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// {@template register_body}
@@ -39,6 +43,13 @@ class _RegisterBodyState extends State<RegisterBody> {
         }
         if (state.status == CurrentStatus.success && state.message.isNotEmpty) {
           await EasyLoadingService.success(text: state.message);
+          if (mounted) {
+            await Navigator.pushAndRemoveUntil(
+              context,
+              MainPage.route(),
+              (Route<dynamic> route) => false,
+            );
+          }
         }
       },
       builder: (context, state) {

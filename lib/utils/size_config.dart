@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class SizeConfig {
   static late MediaQueryData _mediaQueryData;
   static late double screenWidth;
+  static late double screenRadius;
   static late double screenHeight;
   static late double statusBarHeight;
   static late Orientation orientation;
@@ -11,6 +12,7 @@ class SizeConfig {
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
+    screenRadius = _mediaQueryData.size.width / 2;
     screenHeight = _mediaQueryData.size.height;
     orientation = _mediaQueryData.orientation;
     statusBarHeight = _mediaQueryData.padding.top;

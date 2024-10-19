@@ -26,10 +26,6 @@ class _LoginBodyState extends State<LoginBody> {
   @override
   void initState() {
     super.initState();
-    if (kDebugMode) {
-      _email.text = 'jaiemfiv@gmail.com';
-      password.text = 'password@1';
-    }
   }
 
   @override

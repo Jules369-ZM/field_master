@@ -14,10 +14,6 @@ class AnalyticsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = context.watch<AuthBloc>().state.user;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Service Analytics'),
-      //   backgroundColor: Colors.blueAccent,
-      // ),
       body: FutureBuilder<List<AnalyticsData>>(
         future: analyticsService.fetchAnalyticsData(user.email),
         builder: (context, snapshot) {
@@ -140,7 +136,7 @@ class AnalyticsScreen extends StatelessWidget {
         child: BarChart(
           BarChartData(
             maxY: 10, // Example max Y value, adjust based on your data
-            gridData: const FlGridData(show: true, drawHorizontalLine: true),
+            gridData: const FlGridData(),
             titlesData: FlTitlesData(
               leftTitles: AxisTitles(
                 sideTitles: SideTitles(

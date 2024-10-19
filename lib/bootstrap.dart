@@ -4,15 +4,14 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:field_master/certificate_verify.dart';
+import 'package:field_master/utils/cubit/firebase_cubit.dart';
+import 'package:field_master/utils/sms_service.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
-import 'package:field_master/certificate_verify.dart';
-import 'package:field_master/firebase_options.dart';
-import 'package:field_master/utils/cubit/firebase_cubit.dart';
-import 'package:field_master/utils/sms_service.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -34,7 +33,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   firebaseApp = await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
   );
   authInstance = FirebaseAuth.instanceFor(app: firebaseApp);
   // Initialize Firestore

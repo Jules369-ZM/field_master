@@ -27,8 +27,6 @@ class SeviceRequestPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => SeviceRequestCubit(),
       child: Scaffold(
-        // onOrderPlaced(phoneNumber: '+260972489279');
-
         floatingActionButton: isEdit
             ? FloatingActionButton.extended(
                 label: const Text(

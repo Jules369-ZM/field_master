@@ -225,7 +225,7 @@ class _SeviceRequestBodyState extends State<SeviceRequestBody> {
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter the client name';
+                          return 'Please enter the client phone';
                         }
                         return null;
                       },
