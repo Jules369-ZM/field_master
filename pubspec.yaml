@@ -23,6 +23,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   flutter_localizations:
     sdk: flutter
+  flutter_native_contact_picker: ^0.0.7
   geocoding: ^3.0.0
   geolocator: ^13.0.1
   google_fonts: ^6.2.1

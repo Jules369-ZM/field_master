@@ -30,7 +30,8 @@ class App extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => ThemeCubit(authRepo)),
+          BlocProvider(create: (context) =>
+            ThemeCubit(authRepo)),
           BlocProvider(
             create: (context) => FirebaseCubit(
               authRepo: authRepo,
@@ -72,7 +73,8 @@ class _FSMPageView extends StatelessWidget {
         theme: const AppTheme().themeData,
         darkTheme: const AppDarkTheme().themeData,
         themeMode: context.watch<ThemeCubit>().state.mode,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates:
+        AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         builder: EasyLoading.init(),
         navigatorKey: navKey,
